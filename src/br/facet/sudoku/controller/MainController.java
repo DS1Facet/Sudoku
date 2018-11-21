@@ -8,15 +8,27 @@ public class MainController implements IViewControl
     private static IControlModel controlToModel;
     private static IControlView controlToView;
     
-    private void inicarJogo() 
-    {
-        
-    }
-    
     public static void main(String[] args)
     {
         controlToView = new MainWindow();
-        
         controlToView.carregarJanela();
+    }
+    
+    @Override
+    public void novoJogo()
+    {
+        // TODO Auto-generated method stub
+    }
+    
+    @Override
+    public void recomecar()
+    {
+        // TODO Auto-generated method stub
+    }
+    
+    @Override
+    public void configuracoes()
+    {
+        // TODO Auto-generated method stub
     }
 }
