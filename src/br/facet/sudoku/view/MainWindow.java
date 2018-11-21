@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import br.facet.sudoku.view.util.ViewUtils;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainWindow extends JFrame implements IControlView
 {
@@ -26,12 +28,12 @@ public class MainWindow extends JFrame implements IControlView
     private JMenu mnAjuda = new JMenu("Ajuda");
     private JMenuItem mntmSobre = new JMenuItem("Sobre");
     private MainWindow window;
-    private JPanel panel = new JPanel();
-    public static JLabel lblTimer = new JLabel("Timer:");
+    private JPanel pnlPrincipal = new JPanel();
     private int h, m, s, cs;
     private Timer t;
     private JLabel lblSemente = new JLabel("Semente:");
     private JPanel panel_Timer_Semente = new JPanel();
+    private JLabel lblTimer = new JLabel("Timer:");
     
     public MainWindow()
     {
@@ -44,23 +46,32 @@ public class MainWindow extends JFrame implements IControlView
         setResizable(false);
         pack();
         //
-        getContentPane().add(panel, BorderLayout.CENTER);
-        getContentPane().add(panel_Timer_Semente, BorderLayout.SOUTH);
-        panel_Timer_Semente.setLayout(new MigLayout("", "[400px]", "[14px][14px]"));
-        panel_Timer_Semente.add(lblTimer, "cell 0 0,alignx center,aligny top");
-        panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");
-        //
-        setJMenuBar(menuBar);
+        getContentPane().add(pnlPrincipal, BorderLayout.CENTER);
+        pnlPrincipal.setLayout(new BorderLayout(0, 0));
+        pnlPrincipal.add(menuBar, BorderLayout.NORTH);
         menuBar.add(mnJogo);
+        mntmNovoJogo.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e) 
+            {
+                t = new Timer(10, acoes);
+                iniciarTimer();//devere ser integrado com os botões
+                
+            }
+        });
         mnJogo.add(mntmNovoJogo);
         mnJogo.add(mntmRecomecar);
         mnJogo.add(mntmConfiguracoes);
         mnJogo.add(mntmSair);
         menuBar.add(mnAjuda);
         mnAjuda.add(mntmSobre);
+        pnlPrincipal.add(panel_Timer_Semente, BorderLayout.SOUTH);
+        panel_Timer_Semente.setLayout(new MigLayout("", "[400px]", "[14px][14px]"));
+        
+        panel_Timer_Semente.add(lblTimer, "cell 0 0,alignx center");
+        panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");
         //no action listener do botão novo jogo deve ser adicionado o codigo abaixo
-        t = new Timer(10, acoes);
-        iniciarTimer();//devere ser integrado com os botões
         exibeSemente("**Semente teste**");//alterar depois para o retorno da semente vindo do model
     }
     
@@ -83,6 +94,8 @@ public class MainWindow extends JFrame implements IControlView
     
     public void iniciarTimer()
     {
+        //t = new Timer(10, acoes);
+        //iniciarTimer();//devere ser integrado com os botões
         t.start();
         //return para o model o tempo inicial
     }
