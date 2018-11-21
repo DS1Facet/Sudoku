@@ -57,7 +57,6 @@ public class MainWindow extends JFrame implements IControlView
             {
                 t = new Timer(10, acoes);
                 iniciarTimer();//devere ser integrado com os botões
-                
             }
         });
         mnJogo.add(mntmNovoJogo);
