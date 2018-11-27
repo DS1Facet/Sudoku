@@ -17,7 +17,7 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class MainWindow extends JFrame implements IControlView
+public class MainWindow extends JFrame implements IControllerView
 {
     private JMenuBar menuBar = new JMenuBar();
     private JMenu mnJogo = new JMenu("Jogo");
