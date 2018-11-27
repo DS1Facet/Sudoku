@@ -6,7 +6,7 @@ import java.util.Random;
  * Classe que gerencia as regras de negócio de um jogo de sudoku
  * @author MaltonX
  */
-public class SudokuModel implements IControlModel
+public class SudokuModel implements IControllerModel
 {
     //@formatter:off
     private int[][] matrix = new int[][] {
@@ -221,6 +221,18 @@ public class SudokuModel implements IControlModel
     public boolean newGame(long seed)
     {
         r = new Random(seed);
+        //TODO Escolher aleatoriamente CAMPOS NA MATRIZ PARA esconder
         return newGame();
+    }
+
+    @Override
+    public void preencherBotaoSudoku(int i, int j, int numeroCandidato)
+    {
+        if (verificarNumeroCandidato(matrix, i, j, numeroCandidato))
+        {
+            //TODO Preencher Matriz
+        }
+        // TODO Auto-generated method stub
+        
     }
 }

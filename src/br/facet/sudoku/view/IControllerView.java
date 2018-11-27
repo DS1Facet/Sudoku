@@ -7,7 +7,7 @@
 
 package br.facet.sudoku.view;
 
-public interface IControlView
+public interface IControllerView
 {
 
     void carregarJanela();
