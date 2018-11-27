@@ -9,7 +9,6 @@ package br.facet.sudoku.view;
 
 public interface IControlView
 {
-
     void carregarJanela();
     void dispose();
     void exibeSemente();
