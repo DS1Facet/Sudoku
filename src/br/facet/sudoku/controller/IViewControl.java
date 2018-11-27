@@ -6,3 +6,4 @@ public interface IViewControl
     public void recomecar();
     public void configuracoes();
 }
+
