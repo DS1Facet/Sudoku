@@ -2,14 +2,18 @@ package br.facet.sudoku.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import br.facet.sudoku.view.util.ViewUtils;
@@ -35,6 +39,8 @@ public class MainWindow extends JFrame implements IControlView
     private JPanel panel_Timer_Semente = new JPanel();
     private JLabel lblTimer = new JLabel("Timer:");
     
+    private final JPanel panel = new JPanel();
+    
     public MainWindow()
     {
         setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/br/facet/sudoku/resources/images/icon.png")));
@@ -50,6 +56,7 @@ public class MainWindow extends JFrame implements IControlView
         pnlPrincipal.setLayout(new BorderLayout(0, 0));
         pnlPrincipal.add(menuBar, BorderLayout.NORTH);
         menuBar.add(mnJogo);
+        
         mntmNovoJogo.addMouseListener(new MouseAdapter() 
         {
             @Override
@@ -70,8 +77,32 @@ public class MainWindow extends JFrame implements IControlView
         
         panel_Timer_Semente.add(lblTimer, "cell 0 0,alignx center");
         panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");
+        
+        pnlPrincipal.add(panel, BorderLayout.CENTER);
+        panel.setLayout(new GridLayout(9, 9, 3, 3));
+        preencher();
         //no action listener do botão novo jogo deve ser adicionado o codigo abaixo
         exibeSemente("**Semente teste**");//alterar depois para o retorno da semente vindo do model
+        pack();
+    }
+    
+
+    private void preencher()
+    {
+        panel.removeAll();
+        
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                MyJButton b = new MyJButton(i, j);
+                if (((i + j) % 2) == 1)
+                {
+                    b.setEnabled(false);
+                }
+                panel.add(b);
+            }
+        }
     }
     
     @Override
@@ -134,6 +165,8 @@ public class MainWindow extends JFrame implements IControlView
         }
     };
     
+    
+    
     private void atualizarLabel()
     {
         String tempo = (h <= 9 ? "0" : "") + h + ":" + (m <= 9 ? "0" : "") + m + ":" + (s <= 9 ? "0" : "") + s + ":" + (cs <= 9 ? "0" : "") + cs;
@@ -180,5 +213,83 @@ public class MainWindow extends JFrame implements IControlView
     {
         // TODO Auto-generated method stub
         
+    }
+    class MyJButton extends JButton implements ActionListener
+    {
+        public int i;
+        public int j;
+        
+        public MyJButton(int i, int j)
+        {
+            this.i = i;
+            this.j = j;
+            
+            setText(i + ":" + j);
+            
+            addActionListener(this);
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getSource() instanceof JButton)
+            {
+                JButton button = (JButton) e.getSource();
+                
+                //@formatter:off
+                Object[] options = {0,1,2,3,4,5,6,7,8,9};
+                int n = JOptionPane.showOptionDialog(this,
+                        "Selecione o Número",
+                        "Sudoku para "+button.getText(),
+                        JOptionPane.OK_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
+                
+                //@formatter:on
+                //COMO PEGAR O VALOR DE OPTIONS ESCOLHIDO
+                /*
+                 Object opcaoEscolhida = options[n]; 
+                 */
+                
+                //mandar para controller: button.i, button.j, numeroCandidato
+                //mandar para model: button.i, button.j, numeroCandidato
+                //finalizar a thread e começar outra
+                //verificarNumeroCandidato
+                //preencher o numero candidato
+                //mandar para controller: button.i, button.j, numeroCandidato, SePodeColocar
+                //mandar para view: button.i, button.j, numeroCandidato, SePodeColocar
+                //verificarTerminouojogo
+                //mandar para controller: Terminou
+                //mandar para view: Terminou
+                
+                
+                
+                //TODO Como fazer uma thread sentido Model
+                /*
+                         Thread thread = new Thread(new Runnable()
+                         {
+                            @Override
+                            public void run()
+                            {
+                                //TODO CODIGO
+                            }
+                         });
+
+                 */
+                //TODO Como fazer uma thread sentido View
+                /*
+                        SwingUtilities.invokeLater(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                //TODO CODIGO
+                            }
+                        });
+                 */
+            }
+        }
     }
 }
