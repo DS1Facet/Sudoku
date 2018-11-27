@@ -1,9 +1,21 @@
+
+/**
+ * @author: Ricardo
+ * @description Interface para mediar a comunicação de métodos do View que são acessíveis pelo Controller.
+ * 
+*/
+
 package br.facet.sudoku.view;
 
 public interface IControlView
 {
-    /**
-     * Função para carregar a janela e torna-lá visivél.
-     */
+
     void carregarJanela();
+    void dispose();
+    void exibeSemente();
+    void novoJogo();
+    void recomecar();
+    void sair();
+    void ajuda();
+    void configuracoes();
 }
