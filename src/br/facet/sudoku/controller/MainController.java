@@ -31,4 +31,25 @@ public class MainController implements IViewControl
     {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    public void sair()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void ajudaSobre()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void PreencherBotaoSudoku()
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }

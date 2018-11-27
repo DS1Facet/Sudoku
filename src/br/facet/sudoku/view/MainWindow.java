@@ -139,4 +139,46 @@ public class MainWindow extends JFrame implements IControlView
         String tempo = (h <= 9 ? "0" : "") + h + ":" + (m <= 9 ? "0" : "") + m + ":" + (s <= 9 ? "0" : "") + s + ":" + (cs <= 9 ? "0" : "") + cs;
         lblTimer.setText("Timer: " + tempo);
     }
+
+    @Override
+    public void exibeSemente()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void novoJogo()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void recomecar()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void sair()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void ajuda()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void configuracoes()
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
