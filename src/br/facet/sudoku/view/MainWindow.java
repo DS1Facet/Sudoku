@@ -6,13 +6,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
-=======
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
-
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,13 +18,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-<<<<<<< HEAD
 import br.facet.sudoku.controller.IViewController;
 import br.facet.sudoku.model.IControllerModel;
-=======
 
 import br.facet.sudoku.controller.MainController;
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
 import net.miginfocom.swing.MigLayout;
 
 public class MainWindow extends JFrame implements IControllerView
@@ -44,12 +37,9 @@ public class MainWindow extends JFrame implements IControllerView
     private JMenuItem mntmConfiguracoes = new JMenuItem("Configura\u00E7\u00F5es");
     private JMenuItem menuSair = new JMenuItem("Sair");
     private JMenu mnAjuda = new JMenu("Ajuda");
-<<<<<<< HEAD
     private JMenuItem mntmSobre = new JMenuItem("Sobre");
-=======
     private JMenuItem menuSobre = new JMenuItem("Sobre");
     private MainWindow window;
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     private JPanel pnlPrincipal = new JPanel();
     private Timer timer;
     private JLabel lblSemente = new JLabel("Semente:");
@@ -62,12 +52,9 @@ public class MainWindow extends JFrame implements IControllerView
     {
         setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/br/facet/sudoku/resources/images/icon.png")));
         setTitle("SUDOKU - FACET BSI DS1 ");
-<<<<<<< HEAD
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(387, 400);
-=======
         setSize(400, 400);
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
         setMinimumSize(new Dimension(400, 400));
         setLocationRelativeTo(null);
         setResizable(false);
@@ -77,8 +64,6 @@ public class MainWindow extends JFrame implements IControllerView
         pnlPrincipal.setLayout(new BorderLayout(0, 0));
         pnlPrincipal.add(menuBar, BorderLayout.NORTH);
         menuBar.add(mnJogo);
-<<<<<<< HEAD
-=======
         
         mntmNovoJogo.addMouseListener(new MouseAdapter() 
         {
