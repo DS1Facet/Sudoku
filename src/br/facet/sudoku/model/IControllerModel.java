@@ -2,7 +2,7 @@ package br.facet.sudoku.model;
 
 /**
  * @author Ricardo A. A.
- * @description
+ * @description Interface para mediar a comunicação de métodos do Model que são acessíveis pelo Controller.
  */
 public interface IControllerModel
 {
