@@ -7,4 +7,6 @@ public interface IModelController
     public void pararTimer();
     
     public void botaoPreenchido(int i, int j, int numeroCandidato, boolean botaoPreenchido);
+    
+
 }

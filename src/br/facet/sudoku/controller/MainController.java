@@ -8,6 +8,12 @@ public class MainController implements IViewController
     private static IControllerModel controlToModel;
     private static IControllerView controlToView;
     
+    private static final IViewController controller = new MainController();
+    
+    public static IViewController getInstance() {
+    	return controller;
+    }
+    
     public static void main(String[] args)
     {
         controlToView = new MainWindow();
@@ -35,14 +41,14 @@ public class MainController implements IViewController
     @Override
     public void sair()
     {
-        // TODO Auto-generated method stub
         
+    	controlToView.sair();
     }
 
     @Override
     public void ajudaSobre()
     {
-        // TODO Auto-generated method stub
+        controlToView.ajudaSobre();
         
     }
 

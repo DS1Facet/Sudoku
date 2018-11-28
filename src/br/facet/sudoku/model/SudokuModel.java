@@ -205,6 +205,7 @@ public class SudokuModel implements IControllerModel
      * @return true se o jogo pode encontrar um quadro de sudoku adequado. false
      *         do contrário.
      */
+    @Override 
     public boolean newGame()
     {
         zerar();
@@ -218,6 +219,7 @@ public class SudokuModel implements IControllerModel
      *         do contrário.
      * @param seed a semente aleatória usada para gerar o jogo.
      */
+    @Override
     public boolean newGame(long seed)
     {
         r = new Random(seed);
