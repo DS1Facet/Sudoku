@@ -172,7 +172,13 @@ public class SudokuModel implements IControllerModel
      * computador
      * @author MaltonX
      * @return true se o jogo pode encontrar um quadro de sudoku adequado. false
+<<<<<<< HEAD
      *         do contrário. */
+=======
+     *         do contrário.
+     */
+    @Override 
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     public boolean newGame()
     {
         zerar();
@@ -183,7 +189,13 @@ public class SudokuModel implements IControllerModel
      * @author MaltonX
      * @return true se o jogo pode encontrar um quadro de sudoku adequado. false
      *         do contrário.
+<<<<<<< HEAD
      * @param seed a semente aleatória usada para gerar o jogo. */
+=======
+     * @param seed a semente aleatória usada para gerar o jogo.
+     */
+    @Override
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     public boolean newGame(long seed)
     {
         r = new Random(seed);

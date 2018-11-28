@@ -6,6 +6,13 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD
+=======
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,8 +22,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+<<<<<<< HEAD
 import br.facet.sudoku.controller.IViewController;
 import br.facet.sudoku.model.IControllerModel;
+=======
+
+import br.facet.sudoku.controller.MainController;
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
 import net.miginfocom.swing.MigLayout;
 
 public class MainWindow extends JFrame implements IControllerView
@@ -30,9 +42,14 @@ public class MainWindow extends JFrame implements IControllerView
     private JMenuItem mntmNovoJogo = new JMenuItem("Novo Jogo");
     private JMenuItem mntmRecomecar = new JMenuItem("Recome\u00E7ar");
     private JMenuItem mntmConfiguracoes = new JMenuItem("Configura\u00E7\u00F5es");
-    private JMenuItem mntmSair = new JMenuItem("Sair");
+    private JMenuItem menuSair = new JMenuItem("Sair");
     private JMenu mnAjuda = new JMenu("Ajuda");
+<<<<<<< HEAD
     private JMenuItem mntmSobre = new JMenuItem("Sobre");
+=======
+    private JMenuItem menuSobre = new JMenuItem("Sobre");
+    private MainWindow window;
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     private JPanel pnlPrincipal = new JPanel();
     private Timer timer;
     private JLabel lblSemente = new JLabel("Semente:");
@@ -45,26 +62,79 @@ public class MainWindow extends JFrame implements IControllerView
     {
         setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/br/facet/sudoku/resources/images/icon.png")));
         setTitle("SUDOKU - FACET BSI DS1 ");
+<<<<<<< HEAD
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(387, 400);
+=======
+        setSize(400, 400);
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
         setMinimumSize(new Dimension(400, 400));
         setLocationRelativeTo(null);
         setResizable(false);
         pack();
-        //
+
         getContentPane().add(pnlPrincipal, BorderLayout.CENTER);
         pnlPrincipal.setLayout(new BorderLayout(0, 0));
         pnlPrincipal.add(menuBar, BorderLayout.NORTH);
         menuBar.add(mnJogo);
+<<<<<<< HEAD
+=======
+        
+        mntmNovoJogo.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e) 
+            {
+                t = new Timer(10, acoes);
+                iniciarTimer();//devere ser integrado com os botões
+            }
+        });
+        
+        
+        
+        /**
+         * @author Ricardo A. A.
+         * @description Adiciona a ação de fexar a janela e encerrar o programa.
+         */
+        menuSair.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MainController.getInstance().sair();
+				
+			}
+		});
+        
+        
+        /**
+         * @author Ricardo A. A.
+         * @description Adiciona a ação de abrir uma janela com um texto a ser exibido.
+         */
+        menuSobre.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MainController.getInstance().ajudaSobre();
+				
+			}
+		});
+        
+        
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
         mnJogo.add(mntmNovoJogo);
         mnJogo.add(mntmRecomecar);
         mnJogo.add(mntmConfiguracoes);
-        mnJogo.add(mntmSair);
+        mnJogo.add(menuSair);
         menuBar.add(mnAjuda);
-        mnAjuda.add(mntmSobre);
+        mnAjuda.add(menuSobre);
         pnlPrincipal.add(panel_Timer_Semente, BorderLayout.SOUTH);
+<<<<<<< HEAD
         panel_Timer_Semente.setLayout(new MigLayout("", "[400px][]", "[14px][14px]"));
+=======
+        panel_Timer_Semente.setLayout(new MigLayout("", "[400px]", "[14px][14px]"));   
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
         panel_Timer_Semente.add(lblTimer, "cell 0 0,alignx center");
+<<<<<<< HEAD
         btnTestetimer.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0)
@@ -74,6 +144,9 @@ public class MainWindow extends JFrame implements IControllerView
         });
         panel_Timer_Semente.add(btnTestetimer, "cell 1 0");
         panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");
+=======
+        panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");   
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
         pnlPrincipal.add(panel, BorderLayout.CENTER);
         panel.setLayout(new GridLayout(9, 9, 3, 3));
         preencher();
@@ -98,6 +171,7 @@ public class MainWindow extends JFrame implements IControllerView
         }
     }
     
+<<<<<<< HEAD
     /** Função para fechar a janela e salvar o estado atual da janela. */
     @Override
     public void dispose()
@@ -105,6 +179,19 @@ public class MainWindow extends JFrame implements IControllerView
         System.exit(0);
     }
     
+=======
+    @Override
+    public void carregarJanela()
+    {
+        if (window == null)
+        {
+            window = new MainWindow();
+        }
+        this.setVisible(true);
+    }
+    
+
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     public void iniciarTimer()
     {
         if (timer != null)
@@ -156,13 +243,32 @@ public class MainWindow extends JFrame implements IControllerView
     @Override
     public void sair()
     {
+<<<<<<< HEAD
         // TODO Auto-generated method stub
+=======
+    	dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     }
+<<<<<<< HEAD
     
+=======
+    /**
+     * @author Ricardo A. A.
+     * @description Cria a janela com a mensagem a ser exibida ao acionar o botão Sobre no menu Ajuda.
+     */
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     @Override
-    public void ajuda()
+    public void ajudaSobre()
     {
+<<<<<<< HEAD
         // TODO Auto-generated method stub
+=======
+    	JOptionPane.showMessageDialog(this, "Jogo de Sodoku \n Versão 1.0 \n Build 09-2018 "
+    			+ "\n Desenvolvido em Java pela turma de BSI da Faculdade Facet como trabalho "
+    			+ "\n do segundo semestre de 2018 da matéria de DS1.");
+        
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     }
     
     @Override

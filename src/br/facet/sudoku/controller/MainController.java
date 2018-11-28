@@ -21,6 +21,12 @@ public class MainController implements IViewController
         controlToView = new MainWindow(this);
     }
     
+    private static final IViewController controller = new MainController();
+    
+    public static IViewController getInstance() {
+    	return controller;
+    }
+    
     public static void main(String[] args)
     {
         MainController mc = new MainController();
@@ -48,13 +54,23 @@ public class MainController implements IViewController
     @Override
     public void sair()
     {
+<<<<<<< HEAD
         // TODO Auto-generated method stub
+=======
+        
+    	controlToView.sair();
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     }
     
     @Override
     public void ajudaSobre()
     {
+<<<<<<< HEAD
         // TODO Auto-generated method stub
+=======
+        controlToView.ajudaSobre();
+        
+>>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     }
     
     @Override

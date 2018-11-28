@@ -15,6 +15,6 @@ public interface IControlView
     void novoJogo();
     void recomecar();
     void sair();
-    void ajuda();
+    void ajudaSobre();
     void configuracoes();
 }
