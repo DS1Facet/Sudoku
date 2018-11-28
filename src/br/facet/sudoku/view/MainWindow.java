@@ -6,8 +6,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,15 +18,12 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import br.facet.sudoku.controller.IViewController;
 import br.facet.sudoku.model.IControllerModel;
-
-import br.facet.sudoku.controller.MainController;
 import net.miginfocom.swing.MigLayout;
 
 public class MainWindow extends JFrame implements IControllerView
 {
     private long tempoInicial;
-    private IViewController viewToControl;
-    private IControllerModel controlToModel;
+    private IViewController controller;
     //
     private JMenuBar menuBar = new JMenuBar();
     private JMenu mnJogo = new JMenu("Jogo");
@@ -59,53 +54,40 @@ public class MainWindow extends JFrame implements IControllerView
         setLocationRelativeTo(null);
         setResizable(false);
         pack();
-
+        
         getContentPane().add(pnlPrincipal, BorderLayout.CENTER);
         pnlPrincipal.setLayout(new BorderLayout(0, 0));
         pnlPrincipal.add(menuBar, BorderLayout.NORTH);
         menuBar.add(mnJogo);
         
-        mntmNovoJogo.addMouseListener(new MouseAdapter() 
-        {
-            @Override
-            public void mousePressed(MouseEvent e) 
-            {
-                t = new Timer(10, acoes);
-                iniciarTimer();//devere ser integrado com os botões
-            }
-        });
-        
-        
-        
         /**
          * @author Ricardo A. A.
          * @description Adiciona a ação de fexar a janela e encerrar o programa.
          */
-        menuSair.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				MainController.getInstance().sair();
-				
-			}
-		});
-        
+        menuSair.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                sair();
+            }
+        });
         
         /**
          * @author Ricardo A. A.
-         * @description Adiciona a ação de abrir uma janela com um texto a ser exibido.
+         * @description Adiciona a ação de abrir uma janela com um texto a ser
+         *              exibido.
          */
-        menuSobre.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				MainController.getInstance().ajudaSobre();
-				
-			}
-		});
+        menuSobre.addActionListener(new ActionListener()
+        {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                ajudaSobre();
+            }
+        });
         
-        
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
         mnJogo.add(mntmNovoJogo);
         mnJogo.add(mntmRecomecar);
         mnJogo.add(mntmConfiguracoes);
@@ -113,13 +95,9 @@ public class MainWindow extends JFrame implements IControllerView
         menuBar.add(mnAjuda);
         mnAjuda.add(menuSobre);
         pnlPrincipal.add(panel_Timer_Semente, BorderLayout.SOUTH);
-<<<<<<< HEAD
         panel_Timer_Semente.setLayout(new MigLayout("", "[400px][]", "[14px][14px]"));
-=======
-        panel_Timer_Semente.setLayout(new MigLayout("", "[400px]", "[14px][14px]"));   
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
+        panel_Timer_Semente.setLayout(new MigLayout("", "[400px]", "[14px][14px]"));
         panel_Timer_Semente.add(lblTimer, "cell 0 0,alignx center");
-<<<<<<< HEAD
         btnTestetimer.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0)
@@ -129,9 +107,7 @@ public class MainWindow extends JFrame implements IControllerView
         });
         panel_Timer_Semente.add(btnTestetimer, "cell 1 0");
         panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");
-=======
-        panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");   
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
+        panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");
         pnlPrincipal.add(panel, BorderLayout.CENTER);
         panel.setLayout(new GridLayout(9, 9, 3, 3));
         preencher();
@@ -156,7 +132,6 @@ public class MainWindow extends JFrame implements IControllerView
         }
     }
     
-<<<<<<< HEAD
     /** Função para fechar a janela e salvar o estado atual da janela. */
     @Override
     public void dispose()
@@ -164,19 +139,6 @@ public class MainWindow extends JFrame implements IControllerView
         System.exit(0);
     }
     
-=======
-    @Override
-    public void carregarJanela()
-    {
-        if (window == null)
-        {
-            window = new MainWindow();
-        }
-        this.setVisible(true);
-    }
-    
-
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     public void iniciarTimer()
     {
         if (timer != null)
@@ -203,7 +165,7 @@ public class MainWindow extends JFrame implements IControllerView
     
     public void exibeSemente()
     {
-        lblSemente.setText("Semente: " + viewToControl.exibeSemente());
+        lblSemente.setText("Semente: " + controller.exibeSemente());
     }
     
     private void atualizarLabel()
@@ -216,50 +178,34 @@ public class MainWindow extends JFrame implements IControllerView
     @Override
     public void novoJogo()
     {
-        // TODO Auto-generated method stub
     }
     
     @Override
     public void recomecar()
     {
-        // TODO Auto-generated method stub
     }
     
     @Override
     public void sair()
     {
-<<<<<<< HEAD
-        // TODO Auto-generated method stub
-=======
-    	dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     }
-<<<<<<< HEAD
     
-=======
     /**
      * @author Ricardo A. A.
-     * @description Cria a janela com a mensagem a ser exibida ao acionar o botão Sobre no menu Ajuda.
+     * @description Cria a janela com a mensagem a ser exibida ao acionar o
+     *              botão Sobre no menu Ajuda.
      */
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     @Override
     public void ajudaSobre()
     {
-<<<<<<< HEAD
-        // TODO Auto-generated method stub
-=======
-    	JOptionPane.showMessageDialog(this, "Jogo de Sodoku \n Versão 1.0 \n Build 09-2018 "
-    			+ "\n Desenvolvido em Java pela turma de BSI da Faculdade Facet como trabalho "
-    			+ "\n do segundo semestre de 2018 da matéria de DS1.");
-        
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
+        JOptionPane.showMessageDialog(this, "Jogo de Sodoku \n Versão 1.0 \n Build 09-2018 " + "\n Desenvolvido em Java pela turma de BSI da Faculdade Facet como trabalho " + "\n do segundo semestre de 2018 da matéria de DS1.");
     }
     
     @Override
     public void configuracoes()
     {
-        // TODO Auto-generated method stub
     }
     
     class MyJButton extends JButton implements ActionListener

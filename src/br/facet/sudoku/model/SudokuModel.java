@@ -3,8 +3,10 @@ package br.facet.sudoku.model;
 import java.util.Calendar;
 import java.util.Random;
 
-/** Classe que gerencia as regras de negócio de um jogo de sudoku
- * @author MaltonX */
+/**
+ * Classe que gerencia as regras de negócio de um jogo de sudoku
+ * @author MaltonX
+ */
 public class SudokuModel implements IControllerModel
 {
     Calendar dataInicio;
@@ -15,8 +17,10 @@ public class SudokuModel implements IControllerModel
     private Random r = new Random();
     long Semente;
     
-    /** Zera todos os valores da matriz sudoku da classe
-     * @author MaltonX */
+    /**
+     * Zera todos os valores da matriz sudoku da classe
+     * @author MaltonX
+     */
     private void zerar()
     {
         for (int i = 0; i < 9; i++)
@@ -28,10 +32,12 @@ public class SudokuModel implements IControllerModel
         }
     }
     
-    /** Mostra uma matriz 9x9 no console
+    /**
+     * Mostra uma matriz 9x9 no console
      * @author MaltonX
-     * @param matrix Uma matriz 9x9 para mostrar no console */
-    private void showMatrix(int[][] matrix)
+     * @param matrix Uma matriz 9x9 para mostrar no console
+     */
+    public void showMatrix(int[][] matrix)
     {
         System.out.println("+---------+---------+---------+");
         for (int i = 0; i < matrix.length; i++)
@@ -60,14 +66,15 @@ public class SudokuModel implements IControllerModel
         }
     }
     
-    /** Verifica se um numero candidato pode ser utilizado na matriz sudoku
+    /**
+     * Verifica se um numero candidato pode ser utilizado na matriz sudoku
      * @author MaltonX
      * @param matrix A matriz a ser comparada
      * @param row a linha do numeroCandidato
      * @param col a coluna do numeroCandidato
      * @param numeroCandidato o valor do numeroCandidato
-     * @return true se numeroCandidato for um valor válido ou false do
-     *         contrário */
+     * @return true se numeroCandidato for um valor válido ou false do contrário
+     */
     private boolean verificarNumeroCandidato(int[][] matrix, int row, int col, int numeroCandidato)
     {
         // TODO verificar Linha
@@ -100,11 +107,13 @@ public class SudokuModel implements IControllerModel
         return true;
     }
     
-    /** Preenche e retorna um Array contendo os números de 1 a 9 embaralhados
+    /**
+     * Preenche e retorna um Array contendo os números de 1 a 9 embaralhados
      * Adaptado de
      * https://github.com/SomeKittens/Sudoku-Project/blob/master/SudokuGenerator.java
      * @author MaltonX
-     * @return um Array contendo os números de 1 a 9 embaralhados */
+     * @return um Array contendo os números de 1 a 9 embaralhados
+     */
     private int[] getShuffledPossibleNumbersSudoku()
     {
         int[] possibleNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -121,12 +130,14 @@ public class SudokuModel implements IControllerModel
         return possibleNumbers;
     }
     
-    /** Método recursivo que preenche cada célula da matriz de sudoku
+    /**
+     * Método recursivo que preenche cada célula da matriz de sudoku
      * @author MaltonX
      * @param row A linha atual da célula a preencher
      * @param col A coluna atual da célula a preencher
      * @return true se a célula foi preenchida, ou se todos os requesitos foram
-     *         cumpridos. false caso a célula não possa ser preenchida. */
+     *         cumpridos. false caso a célula não possa ser preenchida.
+     */
     private boolean completa_grade(int row, int col)
     {
         if (row == 9)
@@ -168,34 +179,28 @@ public class SudokuModel implements IControllerModel
         return false;
     }
     
-    /** Inicia um novo jogo com uma semente aleatória baseada no timestamp do
+    /**
+     * Inicia um novo jogo com uma semente aleatória baseada no timestamp do
      * computador
      * @author MaltonX
      * @return true se o jogo pode encontrar um quadro de sudoku adequado. false
-<<<<<<< HEAD
-     *         do contrário. */
-=======
      *         do contrário.
      */
-    @Override 
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
+    @Override
     public boolean newGame()
     {
         zerar();
         return completa_grade(0, 0);
     }
     
-    /** Inicia um novo jogo com uma semente aleatória determinada
+    /**
+     * Inicia um novo jogo com uma semente aleatória determinada
      * @author MaltonX
      * @return true se o jogo pode encontrar um quadro de sudoku adequado. false
      *         do contrário.
-<<<<<<< HEAD
-     * @param seed a semente aleatória usada para gerar o jogo. */
-=======
      * @param seed a semente aleatória usada para gerar o jogo.
      */
     @Override
->>>>>>> branch 'master' of https://github.com/DS1Facet/Sudoku.git
     public boolean newGame(long seed)
     {
         r = new Random(seed);
@@ -211,13 +216,11 @@ public class SudokuModel implements IControllerModel
         {
             //TODO Preencher Matriz
         }
-        // TODO Auto-generated method stub
     }
     
     @Override
     public void iniciarTimer()
     {
-        // TODO Auto-generated method stub
         dataInicio = Calendar.getInstance();
     }
     
@@ -230,7 +233,6 @@ public class SudokuModel implements IControllerModel
     @Override
     public long exibeSemente()
     {
-        // TODO Auto-generated method stub
         return Semente;
     }
 }

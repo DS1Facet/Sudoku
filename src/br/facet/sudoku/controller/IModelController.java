@@ -8,5 +8,4 @@ public interface IModelController
     
     public void botaoPreenchido(int i, int j, int numeroCandidato, boolean botaoPreenchido);
     
-
 }
