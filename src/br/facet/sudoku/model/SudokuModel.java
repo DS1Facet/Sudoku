@@ -1,32 +1,22 @@
 package br.facet.sudoku.model;
 
+import java.util.Calendar;
 import java.util.Random;
 
-/**
- * Classe que gerencia as regras de negócio de um jogo de sudoku
- * @author MaltonX
- */
+/** Classe que gerencia as regras de negócio de um jogo de sudoku
+ * @author MaltonX */
 public class SudokuModel implements IControllerModel
 {
+    Calendar dataInicio;
+    Calendar dataFim;
     //@formatter:off
-    private int[][] matrix = new int[][] {
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    private int[][] matrix = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
     //@formatter:on
-    
     private Random r = new Random();
+    long Semente;
     
-    /**
-     * Zera todos os valores da matriz sudoku da classe
-     * @author MaltonX
-     */
+    /** Zera todos os valores da matriz sudoku da classe
+     * @author MaltonX */
     private void zerar()
     {
         for (int i = 0; i < 9; i++)
@@ -38,11 +28,9 @@ public class SudokuModel implements IControllerModel
         }
     }
     
-    /**
-     * Mostra uma matriz 9x9 no console
+    /** Mostra uma matriz 9x9 no console
      * @author MaltonX
-     * @param matrix Uma matriz 9x9 para mostrar no console
-     */
+     * @param matrix Uma matriz 9x9 para mostrar no console */
     private void showMatrix(int[][] matrix)
     {
         System.out.println("+---------+---------+---------+");
@@ -64,9 +52,7 @@ public class SudokuModel implements IControllerModel
                     System.out.print("|");
                 }
             }
-            
             System.out.println();
-            
             if ((i % 3) == 2)
             {
                 System.out.println("+---------+---------+---------+");
@@ -74,15 +60,14 @@ public class SudokuModel implements IControllerModel
         }
     }
     
-    /**
-     * Verifica se um numero candidato pode ser utilizado na matriz sudoku
+    /** Verifica se um numero candidato pode ser utilizado na matriz sudoku
      * @author MaltonX
      * @param matrix A matriz a ser comparada
      * @param row a linha do numeroCandidato
      * @param col a coluna do numeroCandidato
      * @param numeroCandidato o valor do numeroCandidato
-     * @return true se numeroCandidato for um valor válido ou false do contrário
-     */
+     * @return true se numeroCandidato for um valor válido ou false do
+     *         contrário */
     private boolean verificarNumeroCandidato(int[][] matrix, int row, int col, int numeroCandidato)
     {
         // TODO verificar Linha
@@ -92,9 +77,7 @@ public class SudokuModel implements IControllerModel
             {
                 return false;
             }
-            
         }
-        
         // TODO verificar Coluna
         for (int i = 0; i < 9; i++)
         {
@@ -103,7 +86,6 @@ public class SudokuModel implements IControllerModel
                 return false;
             }
         }
-        
         // TODO verificar Bloco
         for (int i = row - (row % 3); i < row - (row % 3) + 3; i++)
         {
@@ -115,24 +97,20 @@ public class SudokuModel implements IControllerModel
                 }
             }
         }
-        
         return true;
     }
     
-    /**
-     * Preenche e retorna um Array contendo os números de 1 a 9 embaralhados
+    /** Preenche e retorna um Array contendo os números de 1 a 9 embaralhados
      * Adaptado de
      * https://github.com/SomeKittens/Sudoku-Project/blob/master/SudokuGenerator.java
      * @author MaltonX
-     * @return um Array contendo os números de 1 a 9 embaralhados
-     */
+     * @return um Array contendo os números de 1 a 9 embaralhados */
     private int[] getShuffledPossibleNumbersSudoku()
     {
         int[] possibleNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         int aux = 0;
         int index = 0;
         int top = possibleNumbers.length;
-        
         for (int i = top - 1; i > 0; i--)
         {
             index = r.nextInt(i);
@@ -140,25 +118,21 @@ public class SudokuModel implements IControllerModel
             possibleNumbers[index] = possibleNumbers[i];
             possibleNumbers[i] = aux;
         }
-        
         return possibleNumbers;
     }
     
-    /**
-     * Método recursivo que preenche cada célula da matriz de sudoku
+    /** Método recursivo que preenche cada célula da matriz de sudoku
      * @author MaltonX
      * @param row A linha atual da célula a preencher
      * @param col A coluna atual da célula a preencher
      * @return true se a célula foi preenchida, ou se todos os requesitos foram
-     *         cumpridos. false caso a célula não possa ser preenchida.
-     */
+     *         cumpridos. false caso a célula não possa ser preenchida. */
     private boolean completa_grade(int row, int col)
     {
         if (row == 9)
         {
             return true;
         }
-        
         if (matrix[row][col] != 0)
         {
             if (col == 8)
@@ -170,13 +144,10 @@ public class SudokuModel implements IControllerModel
                 return completa_grade(row, col + 1);
             }
         }
-        
         int[] possibleNumbers = getShuffledPossibleNumbersSudoku();
-        
         for (int i = 0; i < possibleNumbers.length; i++)
         {
             int numeroCandidato = possibleNumbers[i];
-            
             if (verificarNumeroCandidato(matrix, row, col, numeroCandidato))
             {
                 matrix[row][col] = numeroCandidato;
@@ -193,38 +164,34 @@ public class SudokuModel implements IControllerModel
                 }
             }
         }
-        
         matrix[row][col] = 0;
         return false;
     }
     
-    /**
-     * Inicia um novo jogo com uma semente aleatória baseada no timestamp do
+    /** Inicia um novo jogo com uma semente aleatória baseada no timestamp do
      * computador
      * @author MaltonX
      * @return true se o jogo pode encontrar um quadro de sudoku adequado. false
-     *         do contrário.
-     */
+     *         do contrário. */
     public boolean newGame()
     {
         zerar();
         return completa_grade(0, 0);
     }
     
-    /**
-     * Inicia um novo jogo com uma semente aleatória determinada
+    /** Inicia um novo jogo com uma semente aleatória determinada
      * @author MaltonX
      * @return true se o jogo pode encontrar um quadro de sudoku adequado. false
      *         do contrário.
-     * @param seed a semente aleatória usada para gerar o jogo.
-     */
+     * @param seed a semente aleatória usada para gerar o jogo. */
     public boolean newGame(long seed)
     {
         r = new Random(seed);
+        Semente = seed;
         //TODO Escolher aleatoriamente CAMPOS NA MATRIZ PARA esconder
         return newGame();
     }
-
+    
     @Override
     public void preencherBotaoSudoku(int i, int j, int numeroCandidato)
     {
@@ -233,6 +200,25 @@ public class SudokuModel implements IControllerModel
             //TODO Preencher Matriz
         }
         // TODO Auto-generated method stub
-        
+    }
+    
+    @Override
+    public void iniciarTimer()
+    {
+        // TODO Auto-generated method stub
+        dataInicio = Calendar.getInstance();
+    }
+    
+    @Override
+    public void pararTimer()
+    {
+        dataFim = Calendar.getInstance();
+    }
+    
+    @Override
+    public long exibeSemente()
+    {
+        // TODO Auto-generated method stub
+        return Semente;
     }
 }

@@ -9,8 +9,6 @@ package br.facet.sudoku.view;
 
 public interface IControllerView
 {
-
-    void carregarJanela();
     void dispose();
     void exibeSemente();
     void novoJogo();
