@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.io.FileHandler;
 import br.facet.sudoku.controller.IViewController;
 import br.facet.sudoku.model.IControllerModel;
 import net.miginfocom.swing.MigLayout;
@@ -27,12 +31,13 @@ public class MainWindow extends JFrame implements IControllerView
 {
     private long tempoInicial;
     private IViewController controller;
+    private int numCasas = 1;
     //
     private JMenuBar menuBar = new JMenuBar();
     private JMenu mnJogo = new JMenu("Jogo");
     private JMenuItem mntmNovoJogo = new JMenuItem("Novo Jogo");
     private JMenuItem mntmRecomecar = new JMenuItem("Recome\u00E7ar");
-    private JMenuItem mntmConfiguracoes = new JMenuItem("Configura\u00E7\u00F5es");
+    private JMenuItem mntmSalvarConfiguracoes = new JMenuItem("Salvar Configura\u00E7\u00F5es");
     private JMenuItem menuSair = new JMenuItem("Sair");
     private JMenu mnAjuda = new JMenu("Ajuda");
     private JMenuItem mntmSobre = new JMenuItem("Sobre");
@@ -44,6 +49,7 @@ public class MainWindow extends JFrame implements IControllerView
     private JPanel panel_Timer_Semente = new JPanel();
     private JLabel lblTimer = new JLabel("Timer:");
     private JPanel panel = new JPanel();
+    private final JMenuItem mntmCarregarConfiguraes = new JMenuItem("Carregar Configura\u00E7\u00F5es");
     
     public MainWindow(IViewController controller)
     {
@@ -56,16 +62,13 @@ public class MainWindow extends JFrame implements IControllerView
         setLocationRelativeTo(null);
         setResizable(false);
         pack();
-        
         getContentPane().add(pnlPrincipal, BorderLayout.CENTER);
         pnlPrincipal.setLayout(new BorderLayout(0, 0));
         pnlPrincipal.add(menuBar, BorderLayout.NORTH);
         menuBar.add(mnJogo);
-        
-        /**
-         * @author Ricardo A. A.
-         * @description Adiciona a ação de fexar a janela e encerrar o programa.
-         */
+        /** @author Ricardo A. A.
+         * @description Adiciona a ação de fexar a janela e encerrar o
+         *              programa. */
         menuSair.addActionListener(new ActionListener()
         {
             @Override
@@ -74,31 +77,44 @@ public class MainWindow extends JFrame implements IControllerView
                 sair();
             }
         });
-        
-        /**
-         * @author Ricardo A. A.
+        /** @author Ricardo A. A.
          * @description Adiciona a ação de abrir uma janela com um texto a ser
-         *              exibido.
-         */
+         *              exibido. */
         menuSobre.addActionListener(new ActionListener()
         {
-            
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
                 ajudaSobre();
             }
         });
-        mntmNovoJogo.addMouseListener(new MouseAdapter() {
+        mntmNovoJogo.addMouseListener(new MouseAdapter()
+        {
             @Override
-            public void mousePressed(MouseEvent e) {
-                controller.iniciaNovoJogoBotaoView(5, 17);
+            public void mousePressed(MouseEvent e)
+            {
+                controller.iniciaNovoJogoBotaoView(5, numCasas);
             }
         });
-        
         mnJogo.add(mntmNovoJogo);
         mnJogo.add(mntmRecomecar);
-        mnJogo.add(mntmConfiguracoes);
+        mntmSalvarConfiguracoes.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent arg0)
+            {
+                salvarConfiguracoes();
+            }
+        });
+        mnJogo.add(mntmSalvarConfiguracoes);
+        mntmCarregarConfiguraes.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                carregarConfiguracoes();
+            }
+        });
+        mnJogo.add(mntmCarregarConfiguraes);
         mnJogo.add(menuSair);
         menuBar.add(mnAjuda);
         mnAjuda.add(menuSobre);
@@ -167,14 +183,11 @@ public class MainWindow extends JFrame implements IControllerView
     public void sair()
     {
         dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-        
     }
     
-    /**
-     * @author Ricardo A. A.
+    /** @author Ricardo A. A.
      * @description Cria a janela com a mensagem a ser exibida ao acionar o
-     *              botão Sobre no menu Ajuda.
-     */
+     *              botão Sobre no menu Ajuda. */
     @Override
     public void ajudaSobre()
     {
@@ -182,8 +195,43 @@ public class MainWindow extends JFrame implements IControllerView
     }
     
     @Override
-    public void configuracoes()
+    public void salvarConfiguracoes()
     {
+        try
+        {
+            File file = new File("Sudoku.config.xml");
+            file.createNewFile();
+            XMLConfiguration config = new XMLConfiguration();
+            config.addProperty("sudoku.numCasas", numCasas);
+            FileHandler handler = new FileHandler(config);
+            handler.save(file);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void carregarConfiguracoes()
+    {
+        try
+        {
+            File file = new File("Sudoku.config.xml");
+            //
+            //
+            Configurations configs = new Configurations();
+            XMLConfiguration config = configs.xml(file);
+            //
+            //
+            int numCasasVazias = config.getInt("sudoku.numCasas");
+            //
+            numCasas = numCasasVazias;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
     
     class MyJButton extends JButton implements ActionListener
@@ -196,7 +244,7 @@ public class MainWindow extends JFrame implements IControllerView
         {
             return numero;
         }
-
+        
         public void setNumero(int numero)
         {
             this.numero = numero;
@@ -206,10 +254,10 @@ public class MainWindow extends JFrame implements IControllerView
             }
             else
             {
-                setText(""+numero);
+                setText("" + numero);
             }
         }
-
+        
         public MyJButton(int i, int j)
         {
             this.i = i;
@@ -248,7 +296,7 @@ public class MainWindow extends JFrame implements IControllerView
             }
         }
     }
-
+    
     @Override
     public void iniciarNovoJogo(int[][] matrix)
     {
@@ -266,8 +314,6 @@ public class MainWindow extends JFrame implements IControllerView
                 panel.add(b);
             }
         }
-        
         SwingUtilities.updateComponentTreeUI(panel);
-        
     }
 }

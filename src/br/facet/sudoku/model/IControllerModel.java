@@ -10,10 +10,6 @@ public interface IControllerModel
     
     public void novoJogo(long seed, int difficulty);
     
-    public void iniciarTimer();
-    
-    public void pararTimer();
-    
     public long exibeSemente();
     
     public boolean newGame();

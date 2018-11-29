@@ -10,7 +10,8 @@ public interface IControllerView
     
     public void ajudaSobre();
     
-    public void configuracoes();
+    public void salvarConfiguracoes();
+    public void carregarConfiguracoes();
     
     public void sair();
     
