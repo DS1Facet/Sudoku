@@ -2,11 +2,13 @@ package br.facet.sudoku.model;
 
 /**
  * @author Ricardo A. A.
- * @description Interface para mediar a comunicação de métodos do Model que são acessíveis pelo Controller.
+ * @description
  */
 public interface IControllerModel
 {
     public void preencherBotaoSudoku(int i, int j, int numeroCandidato);
+    
+    public void novoJogo(long seed, int difficulty);
     
     public void iniciarTimer();
     

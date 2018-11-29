@@ -2,6 +2,7 @@ package br.facet.sudoku.model;
 
 import java.util.Calendar;
 import java.util.Random;
+import br.facet.sudoku.controller.IModelController;
 
 /**
  * Classe que gerencia as regras de negócio de um jogo de sudoku
@@ -9,13 +10,19 @@ import java.util.Random;
  */
 public class SudokuModel implements IControllerModel
 {
+    private IModelController controller;
     Calendar dataInicio;
     Calendar dataFim;
     //@formatter:off
     private int[][] matrix = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
     //@formatter:on
     private Random r = new Random();
-    long Semente;
+    private long Semente;
+    
+    public SudokuModel(IModelController controller)
+    {
+        this.controller = controller;
+    }
     
     /**
      * Zera todos os valores da matriz sudoku da classe
@@ -234,5 +241,42 @@ public class SudokuModel implements IControllerModel
     public long exibeSemente()
     {
         return Semente;
+    }
+    
+    private void prepararAMatrizProJogo(int difficulty)
+    {
+        for (int i = 0; i < difficulty; i++)
+        {
+            int row = r.nextInt(9);
+            int col = r.nextInt(9);
+            if (matrix[row][col] != 0)
+            {
+                matrix[row][col] = 0;
+            }
+            else
+            {
+                //FIXME Aqui pode dar um looping infinito
+                i--;
+            }
+        }
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    //Metodos IControllerModel
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    @Override
+    public void novoJogo(long seed, int difficulty)
+    {
+//        System.out.println("Teste");
+        this.Semente = seed;
+        if (newGame(seed))
+        {
+//            System.out.println("Teste IF");
+            prepararAMatrizProJogo(difficulty);
+            controller.novoJogoModel(matrix);
+            controller.iniciarTimer();
+        }
     }
 }

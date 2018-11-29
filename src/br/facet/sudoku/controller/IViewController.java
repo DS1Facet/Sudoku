@@ -1,7 +1,7 @@
 package br.facet.sudoku.controller;
 public interface IViewController
 {
-    public void novoJogo();
+    public void iniciaNovoJogoBotaoView(int semente, int dificuldade);
     
     public void recomecar();
     
@@ -14,4 +14,6 @@ public interface IViewController
     public void preencherBotaoSudoku(int i, int j, int numeroCandidato);
     
     public long exibeSemente();
+    
+    public void iniciarTimer();
 }

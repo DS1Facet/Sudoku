@@ -15,10 +15,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import br.facet.sudoku.controller.IViewController;
 import br.facet.sudoku.model.IControllerModel;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainWindow extends JFrame implements IControllerView
 {
@@ -41,7 +44,6 @@ public class MainWindow extends JFrame implements IControllerView
     private JPanel panel_Timer_Semente = new JPanel();
     private JLabel lblTimer = new JLabel("Timer:");
     private JPanel panel = new JPanel();
-    private JButton btnTestetimer = new JButton("testeTimer");
     
     public MainWindow(IViewController controller)
     {
@@ -87,6 +89,12 @@ public class MainWindow extends JFrame implements IControllerView
                 ajudaSobre();
             }
         });
+        mntmNovoJogo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                controller.iniciaNovoJogoBotaoView(5, 17);
+            }
+        });
         
         mnJogo.add(mntmNovoJogo);
         mnJogo.add(mntmRecomecar);
@@ -98,38 +106,12 @@ public class MainWindow extends JFrame implements IControllerView
         panel_Timer_Semente.setLayout(new MigLayout("", "[400px][]", "[14px][14px]"));
         panel_Timer_Semente.setLayout(new MigLayout("", "[400px]", "[14px][14px]"));
         panel_Timer_Semente.add(lblTimer, "cell 0 0,alignx center");
-        btnTestetimer.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                iniciarTimer();
-            }
-        });
-        panel_Timer_Semente.add(btnTestetimer, "cell 1 0");
         panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");
         panel_Timer_Semente.add(lblSemente, "cell 0 1,alignx center,aligny top");
         pnlPrincipal.add(panel, BorderLayout.CENTER);
         panel.setLayout(new GridLayout(9, 9, 3, 3));
-        preencher();
         pack();
         setVisible(true);
-    }
-    
-    private void preencher()
-    {
-        panel.removeAll();
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                MyJButton b = new MyJButton(i, j);
-                if (((i + j) % 2) == 1)
-                {
-                    b.setEnabled(false);
-                }
-                panel.add(b);
-            }
-        }
     }
     
     /** Função para fechar a janela e salvar o estado atual da janela. */
@@ -139,6 +121,7 @@ public class MainWindow extends JFrame implements IControllerView
         System.exit(0);
     }
     
+    @Override
     public void iniciarTimer()
     {
         if (timer != null)
@@ -176,11 +159,6 @@ public class MainWindow extends JFrame implements IControllerView
     }
     
     @Override
-    public void novoJogo()
-    {
-    }
-    
-    @Override
     public void recomecar()
     {
     }
@@ -212,12 +190,30 @@ public class MainWindow extends JFrame implements IControllerView
     {
         public int i;
         public int j;
+        private int numero;
         
+        public int getNumero()
+        {
+            return numero;
+        }
+
+        public void setNumero(int numero)
+        {
+            this.numero = numero;
+            if (numero == 0)
+            {
+                setText("");
+            }
+            else
+            {
+                setText(""+numero);
+            }
+        }
+
         public MyJButton(int i, int j)
         {
             this.i = i;
             this.j = j;
-            setText(i + ":" + j);
             addActionListener(this);
         }
         
@@ -251,5 +247,27 @@ public class MainWindow extends JFrame implements IControllerView
                  * @Override public void run() { //TODO CODIGO } }); */
             }
         }
+    }
+
+    @Override
+    public void iniciarNovoJogo(int[][] matrix)
+    {
+        panel.removeAll();
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                MyJButton b = new MyJButton(i, j);
+                if (matrix[i][j] != 0)
+                {
+                    b.setNumero(matrix[i][j]);
+                    b.setEnabled(false);
+                }
+                panel.add(b);
+            }
+        }
+        
+        SwingUtilities.updateComponentTreeUI(panel);
+        
     }
 }
